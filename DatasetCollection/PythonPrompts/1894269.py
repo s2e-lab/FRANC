@@ -1,4 +1,4 @@
-def list_string_to_list(list_string: str) -> list:
+def str_to_list(list_string: str) -> list:
     '''
     Convert a string representation of a list to a list.
 
