@@ -1,6 +1,6 @@
 def read_int(prompt: str) -> int:
     '''
-    Read an integer from the user
+    Return an integer read from the user input.
 
     Example:
     read_int('Enter an integer: ') -> 1
