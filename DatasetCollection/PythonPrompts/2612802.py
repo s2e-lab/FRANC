@@ -1,8 +1,8 @@
-def make_copy_of_list(list_to_copy: list) -> list:
+def deep_copy_list(list_to_copy: list) -> list:
     '''
-    Returns a copy of the list passed in.
+    Returns a deep copy of the list passed in.
 
     Example:
-    make_copy_of_list([1, 2, 3])
+    deep_copy_list([1, 2, 3])
     -> [1, 2, 3]
     '''
