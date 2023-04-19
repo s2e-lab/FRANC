@@ -55,28 +55,37 @@ num_suggestions = 10
 
 suggestion_root = "./Suggestions/"
 
+dataset_type = "Java"
+
 py_model_list_small = [
     "Salesforce/codegen-350M-mono",
     "codeparrot/codeparrot-small",
+    "NinedayWang/PolyCoder-160M",
+    "NinedayWang/PolyCoder-0.4B",
+    "Salesforce/codegen-350M-multi",
+    "facebook/incoder-1B",
     "codeparrot/codeparrot",
     "Salesforce/codegen-2B-mono",
+    "Salesforce/codegen-2B-multi",
+    "NinedayWang/PolyCoder-2.7B",
 ]
-py_model_list_big = ["Salesforce/codegen-6B-mono"]
+py_model_list_big = ["Salesforce/codegen-6B-mono", "facebook/incoder-6B", "Salesforce/codegen-6B-multi"]
 
 multi_model_list_small = [
     "NinedayWang/PolyCoder-160M",
     "NinedayWang/PolyCoder-0.4B",
     "Salesforce/codegen-350M-multi",
-    "codeparrot/codeparrot-small-multi",
     "facebook/incoder-1B",
     "Salesforce/codegen-2B-multi",
     "NinedayWang/PolyCoder-2.7B",
 ]
-multi_model_list_big = ["facebook/incoder-6B", "Salesforce/codegen-6B-multi"]
+multi_model_list_big = ["Salesforce/codegen-6B-multi", "facebook/incoder-6B"]
 
+if dataset_type == "Python":
+    combined_model_list = py_model_list_small + py_model_list_big
+else:
+    combined_model_list = multi_model_list_small + multi_model_list_big
 
-# combined_model_list = py_model_list_small + multi_model_list_small + py_model_list_big + multi_model_list_big
-combined_model_list = multi_model_list_small + multi_model_list_big
 
 
 for model_name in combined_model_list:
