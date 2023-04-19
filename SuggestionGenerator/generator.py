@@ -28,9 +28,10 @@ def generate_suggestions(
                 max_new_tokens=max_new_length,
                 num_return_sequences=num_suggestions,
                 pad_token_id=generator.tokenizer.eos_token_id,
+                do_sample=True
             )
         except Exception as e:
-            print("Error with prompt: ", prompt)
+            print("Error with prompt: ", prompt["task_id"], str(e))
             suggestion = []
             updated_prompt["error"] = str(e)
         updated_prompt["suggestions"] = suggestion
@@ -45,7 +46,7 @@ def write_suggestions(suggestions, filename):
 
 
 benchmark_root = "../Benchmarks/"
-benchmark_file = "HumanEval_python.jsonl"
+benchmark_file = "HumanEval_java.jsonl"
 benchmark_path = benchmark_root + benchmark_file
 prompts = get_prompts(benchmark_path)
 
@@ -54,25 +55,29 @@ num_suggestions = 10
 
 suggestion_root = "./Suggestions/"
 
-py_model_list = [
+py_model_list_small = [
     "Salesforce/codegen-350M-mono",
-    "Salesforce/codegen-2B-mono",
-    "Salesforce/codegen-6B-mono",
     "codeparrot/codeparrot-small",
     "codeparrot/codeparrot",
+    "Salesforce/codegen-2B-mono",
 ]
-multi_model_list = [
-    "Salesforce/codegen-350M-multi",
-    "Salesforce/codegen-2B-multi",
-    "Salesforce/codegen-6B-multi",
-    "codeparrot/codeparrot-small-multi",
+py_model_list_big = ["Salesforce/codegen-6B-mono"]
+
+multi_model_list_small = [
     "NinedayWang/PolyCoder-160M",
     "NinedayWang/PolyCoder-0.4B",
-    "NinedayWang/PolyCoder-2.7B",
+    "Salesforce/codegen-350M-multi",
+    "codeparrot/codeparrot-small-multi",
     "facebook/incoder-1B",
-    "facebook/incoder-6B",
+    "Salesforce/codegen-2B-multi",
+    "NinedayWang/PolyCoder-2.7B",
 ]
-combined_model_list = py_model_list + multi_model_list
+multi_model_list_big = ["facebook/incoder-6B", "Salesforce/codegen-6B-multi"]
+
+
+# combined_model_list = py_model_list_small + multi_model_list_small + py_model_list_big + multi_model_list_big
+combined_model_list = multi_model_list_small + multi_model_list_big
+
 
 for model_name in combined_model_list:
     print(model_name)
