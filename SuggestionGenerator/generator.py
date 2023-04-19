@@ -2,6 +2,9 @@ import json
 from transformers import pipeline
 from tqdm.auto import tqdm
 
+import torch
+
+
 
 def get_prompts(filename):
     with open(filename) as f:
@@ -90,6 +93,7 @@ else:
 
 for model_name in combined_model_list:
     print(model_name)
+    torch.cuda.empty_cache()
     suggestion_file = (
         benchmark_file.split(".")[0]
         + "_"
