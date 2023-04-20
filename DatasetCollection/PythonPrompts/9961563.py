@@ -1,9 +1,7 @@
-import subprocess
+import pygame
 
-def run_command(command):
+
+def sprite_move():
     '''
-    Runs a command and returns the output
-
-    Example:
-    run_command('echo "Hello World"') -> 'Hello World'
+    Create a sprite and move it around the screen when the user presses the arrow keys.
     '''
