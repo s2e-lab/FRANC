@@ -3,15 +3,11 @@ from transformers import pipeline
 from tqdm.auto import tqdm
 
 import torch
+from utils import (
+    get_prompts,
+    write_suggestions
+)
 
-
-
-def get_prompts(filename):
-    with open(filename) as f:
-        prompts = []
-        for line in f:
-            prompts.append(json.loads(line))
-    return prompts
 
 
 def get_generator(model_name):
@@ -40,12 +36,6 @@ def generate_suggestions(
         updated_prompt["suggestions"] = suggestion
         suggestions.append(updated_prompt)
     return suggestions
-
-
-def write_suggestions(suggestions, filename):
-    with open(filename, "w") as f:
-        for suggestion in suggestions:
-            f.write(json.dumps(suggestion) + "\n")
 
 
 benchmark_root = "../Benchmarks/"
