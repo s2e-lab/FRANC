@@ -35,3 +35,14 @@ def get_line_number(code: str, target_line: str) -> int:
 def get_code_up_to_line(code: str, line_number: int) -> str:
     lines = code.splitlines()
     return "\n".join(lines[:line_number])
+
+
+def line_of_index(code: str, index: int) -> int:
+    lines = code.splitlines()
+    line_number = 0
+    for line in lines:
+        if index < len(line):
+            return line_number
+        index -= len(line)
+        line_number += 1
+    return -1

@@ -1,9 +1,9 @@
 import re
 import time
 
-from utils import get_method_name, get_line_number, get_code_up_to_line
+from utils import get_method_name, get_line_number, get_code_up_to_line, line_of_index
 
-DEBUG = False
+DEBUG = True
 
 
 def heuristic_1(code: str) -> tuple[str, bool]:
@@ -27,7 +27,7 @@ def heuristic_2(code, data, key, language) -> str:
     heuristic_applied = False
     prompt = data[key]
 
-    method_name = get_method_name(code,language)
+    method_name = get_method_name(code, language)
 
     """
     There can be partial code from the prompt in the generated code.
@@ -66,19 +66,58 @@ def heuristic_3(code, language) -> str:
         ignore_line_before = get_line_number(code, method_name)
 
     # removes the extra code
-    eof_tokens = ["\n```\n\n##", "</code>", "print("]
+    eof_tokens = ["\n```\n\n##", "</code>"]
     applied_heuristic = False
     for e in eof_tokens:
         index = code.index(e) if e in code else None
-        if index and index > ignore_line_before:
+        if index and line_of_index(code, index) > ignore_line_before:
             code = code[:index]
             applied_heuristic = True
     return code, applied_heuristic
 
 
+def heuristic_4(code, data, key, language) -> str:
+    prompt = data[key]
+    method_name = get_method_name(prompt, language)
+
+    applied_heuristic = False
+
+    last_method_in_code = get_method_name(code, language)
+    if last_method_in_code == "":
+        return code, applied_heuristic
+    while last_method_in_code != method_name:
+        code = code[: code.rindex(last_method_in_code)]
+        last_method_in_code = get_method_name(code, language)
+        applied_heuristic = True
+        if last_method_in_code == "":
+            return code, applied_heuristic
+
+    return code, applied_heuristic
+
+
+def heuristic_5(code, language) -> str:
+    method_name = get_method_name(code, language)
+    ignore_line_before = get_line_number(code, method_name)
+
+    applied_heuristic = False
+
+    matches = re.findall("\n\S", code)
+    if len(matches) > 0:
+        for match in matches:
+            try:
+                index = code.index(match)
+            except ValueError:
+                index = None
+            if index and line_of_index(code, index) > ignore_line_before:
+                code = code[:index]
+                applied_heuristic = True
+
+    return code, applied_heuristic
+
+
 def fix_code(dataset, model, code, data, language, key="prompt") -> str:
     # track what heuristic(s) were applied, if any
-    total_heuristics = 3
+    total_heuristics = 5
     applied_heuristics = [False for _ in range(0, total_heuristics)]
 
     if "gpt3.5" in model:
@@ -86,6 +125,8 @@ def fix_code(dataset, model, code, data, language, key="prompt") -> str:
         code, applied_heuristics[1] = heuristic_2(code, data, key, language)
 
     code, applied_heuristics[2] = heuristic_3(code, language)
+    code, applied_heuristics[3] = heuristic_4(code, data, key, language)
+    code, applied_heuristics[4] = heuristic_5(code, language)
 
     applied_heuristics = [
         f"H{i + 1}" for i in range(0, total_heuristics) if applied_heuristics[i]
@@ -101,9 +142,9 @@ def apply_heuristics(benchmark_file, prompts, key, max_new_length, num_suggestio
     print("Dataset: ", dataset_name)
     print("Model: ", model_name)
 
-    language = "Java"
-    if'python' in benchmark_file.lower():
-        language = "Python"
+    language = "java"
+    if "python" in benchmark_file.lower():
+        language = "python"
     print("Language: ", language)
 
     fixed_suggestions = []
@@ -131,10 +172,14 @@ def apply_heuristics(benchmark_file, prompts, key, max_new_length, num_suggestio
             suggestion["time_taken_static_filter"] = end_time - start_time
             suggestions[i] = suggestion
             print("Applied heuristics: ", applied_heuristics)
-            
+
             if DEBUG:
                 with open(
-                    "./Dummy_output/"+model_name+"_"+dataset_name+"_"
+                    "./Dummy_output/"
+                    + model_name
+                    + "_"
+                    + dataset_name
+                    + "_"
                     + prompt["task_id"].replace("/", "_")
                     + "_"
                     + str(i)
