@@ -13,7 +13,7 @@ benchmark_root = "../SuggestionGenerator/Suggestions/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
-    if benchmark_file.startswith("HumanEval_python") and 'HumanEval_python_codegen-2B-mono_128_10' in benchmark_file:
+    if benchmark_file.startswith("HumanEval_python") and '.DS_Store' not in benchmark_file:
         print("Processing file: ", benchmark_file)
         benchmark_path = benchmark_root + benchmark_file
         prompts = get_prompts(benchmark_path)

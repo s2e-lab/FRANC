@@ -1,9 +1,9 @@
 import re
 import time
 
-from utils import get_method_name, get_line_number, get_code_up_to_line, line_of_index
+from utils import get_method_name, get_line_number, get_code_up_to_line, line_of_index, remove_content_from_folder
 
-DEBUG = True
+DEBUG = False
 
 
 def heuristic_1(code: str) -> tuple[str, bool]:
@@ -104,13 +104,15 @@ def heuristic_5(code, language) -> str:
     matches = re.findall("\n\S", code)
     if len(matches) > 0:
         for match in matches:
-            try:
-                index = code.index(match)
-            except ValueError:
-                index = None
+            if match.strip().endswith("#"):
+                continue
+            
+            index = code.index(match)
+
             if index and line_of_index(code, index) > ignore_line_before:
                 code = code[:index]
                 applied_heuristic = True
+                break
 
     return code, applied_heuristic
 
@@ -146,6 +148,8 @@ def apply_heuristics(benchmark_file, prompts, key, max_new_length, num_suggestio
     if "python" in benchmark_file.lower():
         language = "python"
     print("Language: ", language)
+
+    remove_content_from_folder("Dummy_output")
 
     fixed_suggestions = []
     for prompt in prompts:
