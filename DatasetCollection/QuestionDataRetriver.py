@@ -7,7 +7,7 @@ import json
 
 target = "new"
 
-with open(f"{target}ID.txt", "r") as f:
+with open(f"{target}IDJava.txt", "r") as f:
     IDs = f.readlines()
     IDs = [x.strip() for x in IDs]
     for ID in IDs:
@@ -16,8 +16,14 @@ with open(f"{target}ID.txt", "r") as f:
         response = requests.get(url)
         data = response.json()
         print(data)
-        with open(f"{target}Data.csv", "a") as f:
+        if "items" not in data.keys():
+            writer.writerow([ID,"", "", "", "", ""])  
+            continue
+        with open(f"{target}DataJava.csv", "a") as f:
             writer = csv.writer(f)
+            if len(data["items"]) == 0:
+                writer.writerow([ID,"", "", "", "", ""])   
+                continue
             for item in data["items"]:
                 accepted_answer_id = ""
                 if 'accepted_answer_id' in item.keys():
