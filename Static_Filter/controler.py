@@ -13,7 +13,7 @@ benchmark_root = "../SuggestionGenerator/Suggestions/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
-    if benchmark_file.startswith("HumanEval_python") and "gpt3.5" not in benchmark_file:
+    if benchmark_file.startswith("HumanEval_python") and 'gpt3.5' in benchmark_file:
         print("Processing file: ", benchmark_file)
         benchmark_path = benchmark_root + benchmark_file
         prompts = get_prompts(benchmark_path)
@@ -28,6 +28,7 @@ for benchmark_file in dir_list:
 
             
         suggestions = apply_heuristics(
+                benchmark_file,
                 prompts,
                 key="prompt",
                 max_new_length=max_new_length,
