@@ -2,6 +2,10 @@ import json
 import re
 import os, shutil
 
+import javalang
+from javalang.parser import JavaSyntaxError
+from javalang.tokenizer import LexerError
+
 def get_prompts(filename):
     with open(filename) as f:
         prompts = []
@@ -58,3 +62,33 @@ def remove_content_from_folder(folder):
                 shutil.rmtree(file_path)
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+
+def get_class_name(code: str, language) -> str:
+    pattern = ""
+    if language == "python":
+        pattern = r"^class\s+(\w+)\s*\("
+    elif language == "java":
+        pattern = r"^class\s+(\w+)\s*\{"
+
+    matches = re.findall(pattern, code, re.MULTILINE)
+    if len(matches) > 0:
+        return matches[0]
+    return ""
+
+def get_all_class_names(code: str, language) -> str:
+    pattern = ""
+    if language == "python":
+        pattern = r"^class\s+\w+\s*\("
+    elif language == "java":
+        pattern = r"class\s+\w+\s*\{"
+
+    matches = re.findall(pattern, code, re.MULTILINE)
+    return matches
+
+
+def parse_code(code) -> bool:
+    try:
+        return javalang.parse.parse(code)  # code is compilable
+    except (JavaSyntaxError, LexerError, TypeError, RecursionError) as e:
+        return None
