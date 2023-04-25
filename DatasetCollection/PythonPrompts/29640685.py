@@ -24,5 +24,5 @@ class Bullet:
 
 def detect_collision(sprite, bullet):
     '''
-    Returns True if the sprite and bullet collide and False otherwise.
+    Return True if the sprite and bullet collide and False otherwise.
     '''

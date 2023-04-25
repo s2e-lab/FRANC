@@ -6,7 +6,7 @@ import java.net.*;
 
 class ID_1560788{
     /**
-     * Write a function to check internet connection using Java.
+     * Write a function to check internet connection.
      * 
      * Example:
      * boolean connected = isConnected();

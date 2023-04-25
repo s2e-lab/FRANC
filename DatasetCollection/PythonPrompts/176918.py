@@ -1,6 +1,6 @@
 def find_index(lst: list, value: int) -> int:
     '''
-    Returns the index of the first occurrence of the value in the list.
+    Return the index of the first occurrence of the value in the list.
     If the value is not in the list, returns -1.
 
     Example:
