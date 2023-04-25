@@ -17,12 +17,23 @@ for benchmark_file in dir_list:
         max_new_length = 128
         num_suggestions = 10
 
-        dataset_type = "Python"
-        suggestion_root = "./Static_Filtered_Suggestions/   "
+        dataset_type = "Java"
+        if "python" in benchmark_file.lower():
+            dataset_type = "Python"
+        print("Dataset type: ", dataset_type)
+
+        suggestion_root = "./Quality_Filtered_Suggestions/"
         suggestion_path = os.path.join(suggestion_root, benchmark_file)
         suggestions = []
         if dataset_type == "Python":
-            suggestions = python_analyzer()
+            suggestions = python_analyzer(
+                benchmark_file,
+                prompts,
+                key="prompt",
+                max_new_length=max_new_length,
+                num_suggestions=num_suggestions,
+            )
         elif dataset_type == "Java":
-            suggestions = java_analyzer()
+            continue
+            # suggestions = java_analyzer()
         write_suggestions(suggestions, suggestion_path)
