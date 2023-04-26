@@ -9,8 +9,18 @@ def generate_integers(a, b):
     generate_integers(8, 2) => [2, 4, 6, 8]
     generate_integers(10, 14) => []
     """
-    if a > b:
-        # if b is zero, we need to divide by the even number
-        a, b = b % 10, a // 10
-    return [int(round(a, 2)), int(round(b, 2)) if b else int(-b) % 10 else None]
+    l = [0] * (b - a + 1)
+    i = 0
+    while True:
+        l[i] = i
+        i += 1
+        for j in range(i, b):
+            if l[j] % 2!= 0:
+                break
+        l[i] = l[j] + 1
+
+        if a <= i <= b:
+            break
+    print(l)
+    return [int(v) for v in l]
 

@@ -1,26 +1,60 @@
 import json
 import subprocess
 import time
+import xmltodict
+from tqdm.auto import tqdm
 
-DEBUG = False
+DEBUG = True
 
-def check_vulnerable(code):
-    file = open('temp.py', 'w')
+TEMP_PYTHON_FILE = "./Temp_Python_Folder/temp.py"
+TEMP_PYTHON_JSON_FILE = "./Temp_Python_Folder/temp.json"
+
+TEMP_JAVA_FILE = "./Temp_Java_Folder/temp.java"
+TEMP_JAVA_ERROR_FILE = "./Temp_Java_Folder/error.txt"
+TEMP_JAVA_SPOTBUGS_FILE = "./Temp_Java_Folder/spotbugs.xml"
+
+
+def python_analyzer(code):
+    file = open(TEMP_PYTHON_FILE, "w")
     file.write(code)
     file.close()
-    result = subprocess.run(["sh", "script.sh"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-    if result!=None:
-        with open('temp.json', 'r') as f:
+    result = subprocess.run(
+        ["sh", "bandit_script.sh"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if result != None:
+        with open(TEMP_PYTHON_JSON_FILE, "r") as f:
             data = json.load(f)
-            return data['results']
+            return data["errors"], data["results"]
 
-def java_analyzer(code: str, prompt: str) -> str:
+
+def java_analyzer(code):
     """
     Analyzes the code and returns the suggestion
     """
-    pass
+    file = open(TEMP_JAVA_FILE, "w")
+    file.write(code)
+    file.close()
+    return_data = subprocess.run(
+        ["sh", "spotbugs_script.sh"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    if return_data != None:
+        error = ""
+        result = ""
+        with open(TEMP_JAVA_ERROR_FILE, "r") as f:
+            error = f.read()
+        if len(error) == 0:
+            with open(TEMP_JAVA_SPOTBUGS_FILE, "r") as f:
+                result = xmltodict.parse(f.read())
+        return error, result
 
-def python_analyzer(benchmark_file, prompts, key, max_new_length, num_suggestions):
+
+def analyzer(benchmark_file, prompts, key, max_new_length, num_suggestions):
     """
     Analyzes the code and returns the suggestion
     """
@@ -37,8 +71,7 @@ def python_analyzer(benchmark_file, prompts, key, max_new_length, num_suggestion
         print("Language: ", language)
 
     fixed_suggestions = []
-    for prompt in prompts:
-
+    for prompt in tqdm(prompts):
         if DEBUG:
             print("Processing prompt: ", prompt["task_id"])
         updated_prompt = prompt.copy()
@@ -54,21 +87,35 @@ def python_analyzer(benchmark_file, prompts, key, max_new_length, num_suggestion
 
             suggestion = suggestions[i]
             code = suggestion["fixed_generated_text"]
+            error = ""
+            result = ""
             start_time = time.time()
-            result = check_vulnerable(code)
-            suggestion['Is_Vulnerable'] = (len(result)!=0)
-            suggestion['Analyzer_Result'] = result
+            if language == "python":
+                error, result = python_analyzer(code)
+                suggestion["Is_Vulnerable"] = len(result) != 0
+            else:
+                error, result = java_analyzer(code)
+                suggestion["Is_Vulnerable"] = False
+                if result != "":
+                    if "BugCollection" in result:
+                        if "BugInstance" in result["BugCollection"]:
+                            suggestion["Is_Vulnerable"] = True
+            print
             
+            suggestion["Analyzer_Result"] = result
+
+            suggestion["Is_Compilable"] = len(error) == 0
+            suggestion["Error"] = error
+
+            print("Is_Compilable: ", suggestion["Is_Compilable"])
+            print("Is_Vulnerable: ", suggestion["Is_Vulnerable"])
 
             end_time = time.time()
-            
+
             suggestion["time_taken_quality_filter"] = end_time - start_time
             suggestions[i] = suggestion
-
-
 
         updated_prompt["suggestions"] = suggestions
         fixed_suggestions.append(updated_prompt)
     print("Done processing")
     return fixed_suggestions
-    
