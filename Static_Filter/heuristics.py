@@ -1,5 +1,6 @@
 import re
 import time
+from tqdm.auto import tqdm
 
 from utils import (
     get_method_name,
@@ -15,7 +16,7 @@ from utils import (
 DEBUG = False
 
 
-def heuristic_1(code: str, language: str) -> tuple[str, bool]:
+def heuristic_1(code: str, language: str):
     """
     Captures the code between the triple backticks.
     @param code: generated code.
@@ -34,7 +35,7 @@ def heuristic_1(code: str, language: str) -> tuple[str, bool]:
     return code, applied_heuristic
 
 
-def heuristic_2(code, data, key, language) -> str:
+def heuristic_2(code, data, key, language):
     # Combine the code with the prompt
 
     heuristic_applied = False
@@ -71,7 +72,7 @@ def heuristic_2(code, data, key, language) -> str:
     return code, heuristic_applied
 
 
-def heuristic_3(code, language) -> str:
+def heuristic_3(code, language):
     method_name = get_method_name(code, language)
 
     ignore_line_before = 0
@@ -89,7 +90,7 @@ def heuristic_3(code, language) -> str:
     return code, applied_heuristic
 
 
-def heuristic_4(code, data, key, language) -> str:
+def heuristic_4(code, data, key, language):
     prompt = data[key]
     method_name = get_method_name(prompt, language)
 
@@ -108,7 +109,7 @@ def heuristic_4(code, data, key, language) -> str:
     return code, applied_heuristic
 
 
-def heuristic_5(code, language) -> str:
+def heuristic_5(code, language):
     method_name = get_method_name(code, language)
     ignore_line_before = get_line_number(code, method_name)
 
@@ -130,7 +131,7 @@ def heuristic_5(code, language) -> str:
     return code, applied_heuristic
 
 
-def heuristic_6(code: str, data, key, language) -> tuple[str, bool]:
+def heuristic_6(code: str, data, key, language):
     prompt = data[key]
     class_name = get_class_name(prompt, language)
     applied_heuristic = False
@@ -146,7 +147,7 @@ def heuristic_6(code: str, data, key, language) -> tuple[str, bool]:
     return code, applied_heuristic
 
 
-def heuristic_7(code: str, data, key) -> tuple[str, bool]:
+def heuristic_7(code: str, data, key):
     """
     Fixes 'incomplete statements' type of compilation errors.
     Try to fix incomplete code by iteratively deleting lines and adding curly brackets.
@@ -192,7 +193,7 @@ def heuristic_7(code: str, data, key) -> tuple[str, bool]:
     return code, False
 
 
-def fix_code(dataset, model, code, data, language, key="prompt") -> str:
+def fix_code(dataset, model, code, data, language, key="prompt"):
     # track what heuristic(s) were applied, if any
     total_heuristics = 7
     applied_heuristics = [False for _ in range(0, total_heuristics)]
@@ -233,7 +234,7 @@ def apply_heuristics(benchmark_file, prompts, key, max_new_length, num_suggestio
     remove_content_from_folder("Dummy_output")
 
     fixed_suggestions = []
-    for prompt in prompts:
+    for prompt in tqdm(prompts):
 
         if DEBUG:
             print("Processing prompt: ", prompt["task_id"])
