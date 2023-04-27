@@ -4,7 +4,7 @@ import time
 import xmltodict
 from tqdm.auto import tqdm
 
-DEBUG = True
+DEBUG = False
 
 TEMP_PYTHON_FILE = "./Temp_Python_Folder/temp.py"
 TEMP_PYTHON_JSON_FILE = "./Temp_Python_Folder/temp.json"
@@ -50,7 +50,11 @@ def java_analyzer(code):
             error = f.read()
         if len(error) == 0:
             with open(TEMP_JAVA_SPOTBUGS_FILE, "r") as f:
-                result = xmltodict.parse(f.read())
+                try:
+                    result = xmltodict.parse(f.read())
+                except Exception as e:
+                    print("Error in parsing xml file: ", e)
+                    error = "Error in parsing spotbugs.xml file possible reason: no class created because of empty file"
         return error, result
 
 
@@ -100,15 +104,14 @@ def analyzer(benchmark_file, prompts, key, max_new_length, num_suggestions):
                     if "BugCollection" in result:
                         if "BugInstance" in result["BugCollection"]:
                             suggestion["Is_Vulnerable"] = True
-            print
             
             suggestion["Analyzer_Result"] = result
 
             suggestion["Is_Compilable"] = len(error) == 0
             suggestion["Error"] = error
 
-            print("Is_Compilable: ", suggestion["Is_Compilable"])
-            print("Is_Vulnerable: ", suggestion["Is_Vulnerable"])
+            # print("Is_Compilable: ", suggestion["Is_Compilable"])
+            # print("Is_Vulnerable: ", suggestion["Is_Vulnerable"])
 
             end_time = time.time()
 
