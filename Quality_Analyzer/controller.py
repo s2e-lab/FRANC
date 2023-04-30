@@ -24,6 +24,7 @@ for benchmark_file in dir_list:
             dataset_type = "Python"
         else:
             dataset_type = "Java"
+            continue
         print("Dataset type: ", dataset_type)
 
         suggestion_root = "./Quality_Filtered_Suggestions/"

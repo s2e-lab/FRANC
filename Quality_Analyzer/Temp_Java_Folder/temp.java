@@ -3,37 +3,22 @@ import java.lang.*;
 import java.util.*;
 import java.math.*;
 
-
-class GenerateIntegers {
+class ID_41107{
     /**
-     * * Given two positive integers a and b, return the even digits between a
-     * and b, in ascending order.
-
-     * For example:
-     * generate_integers(2, 8) => [2, 4, 6, 8]
-     * generate_integers(8, 2) => [2, 4, 6, 8]
-     * generate_integers(10, 14) => []
-     *
-     * > generateIntegers(2, 10)
-     * [2, 4, 6, 8]
-     * > generateIntegers(10, 2)
-     * [2, 4, 6, 8]
-     * > generateIntegers(132, 2)
-     * [2, 4, 6, 8]
-     * > generateIntegers(17, 89)
-     * []
+     * Write a program to create a random alphanumeric string of a given length.
+     * 
+     * Example:
+     * randomString(10);
+     * 
+     * output: 2aBb3cDd4e
      */
-    public static List<Object> generateIntegers(int a, int b) {
-	List<Integer> evenDigits = new ArrayList<>();
-for (int i = Math.min(a, b); i <= Math.max(a, b); i++) {
-    String str = Integer.toString(i);
-    for (int j = 0; j < str.length(); j++) {
-        if (Character.isDigit(str.charAt(j)) && (str.charAt(j) - '0') % 2 == 0) {
-            evenDigits.add(str.charAt(j) - '0');
+    public static String randomString(int length) {
+        String result = "";
+        int r = random.nextInt(length - 1);
+        for (int i = 0; i < r; i++) {
+            result += "1";
         }
+        return result.substring(0, r);
     }
-}
-Collections.sort(evenDigits);
-return new ArrayList<Object>(evenDigits);
-}
+
 }

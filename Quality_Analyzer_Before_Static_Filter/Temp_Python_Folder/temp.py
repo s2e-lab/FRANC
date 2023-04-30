@@ -1,26 +1,29 @@
-def _inline_r_setup(code: str) -> str:
-	"""
-	Some behaviour of R cannot be configured via env variables, but can
-	only be configured via R options once R has started. These are set here.
-	"""
-	
 
-	# No-op
-	r_options = {}
+def generate_integers(a, b):
+    """
+    Given two positive integers a and b, return the even digits between a
+    and b, in ascending order.
 
-	# Set a default value if you want a specific value. None if not present.
-	if "r_default" not in code:
+    For example:
+    generate_integers(2, 8) => [2, 4, 6, 8]
+    generate_integers(8, 2) => [2, 4, 6, 8]
+    generate_integers(10, 14) => []
+    """
 
-		r_options[
-			"r_default"
-		] = True
+# pylint: disable=too-many-arguments
+def main(argv=sys.argv):
+    import argparse
+    import functools
 
-	# Add these to the r_options dictionary.
-	r_options["r_type"] = code
+    parser = argparse.ArgumentParser(
+        description='''Generate integers in range [0, 1]')
 
-	# Add the default and user specified flags.
-	r_options["r_flags"] = r_options.get("r_flags", [])
+    subparsers = parser.add_subparsers(help='additional help')
+    subparsers.required = True
+    subparser_build_subparsers = subparsers.add_parser(
+        'build', help='build the integers')
 
-	# Default setting
-
-	# Set
+    subparser_build_subparsers.required = True
+    # Create the subparser object before the build
+    subparsers.add_parser(
+        'build_int64',
