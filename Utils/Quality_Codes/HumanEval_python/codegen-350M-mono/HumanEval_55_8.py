@@ -1,0 +1,21 @@
+
+
+def fib(n: int):
+    """Return n-th Fibonacci number.
+    >>> fib(10)
+    55
+    >>> fib(1)
+    1
+    >>> fib(8)
+    21
+    """
+    if n <= 2:
+        return 1
+    a = 0
+    b = 1
+    for i in range(4, n + 1):
+        c = a + b
+        b = a
+        a = c
+    return c
+

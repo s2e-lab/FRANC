@@ -1,0 +1,23 @@
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+import java.math.*;
+
+
+class ID113{
+	/**
+	* This function takes an array of words, and returns a string with all the words in the separated by a space.
+	*/
+	public static String getStringfromStringArray(String[] array){
+			String text="";
+			Collections.sort(array);
+			for(int j=0; j<array.length; j++){
+				text+=array[j]+" ";
+			}
+			return text;
+		}
+		
+	public static String print(int[] array){
+		int start=0;
+}
+}

@@ -1,0 +1,15 @@
+def sort_list_of_dicts(lst: list, key: str) -> list:
+    '''
+    Sort a list of dictionaries by a key.
+    
+    Example:
+    sort_list_of_dicts([{'a': 2}, {'a': 1}], 'a') -> [{'a': 1}, {'a': 2}]
+    sort_list_of_dicts([{'a': 2}, {'a': 1}], 'b') -> [{'a': 2}, {'a': 1}]
+    '''
+    keys = key.lower()
+    for v in lst:
+        if v[1] in keys:
+            v.sort(key=key)
+            return v
+    return lst
+

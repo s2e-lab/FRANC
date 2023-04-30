@@ -1,0 +1,18 @@
+def ttl_cache(maxsize=128, ttl=600, timer=time.monotonic, typed=False):
+	"""
+	Decorator to wrap a function with a memoizing callable that saves
+	up to `maxsize` results based on a Least Recently Used (LRU)
+	algorithm with a per-item time-to-live (TTL) value.
+	"""
+	
+
+	def inner_f(func):
+		@functools.wraps(func)
+		def memoizer(*args, **kwargs):
+			if not typed:
+				ttl = ttl if ttl is not None else random.randint(int(time.time()) / ttl_cache(), maxsize)
+				_cache_ttl_cache.add(ttl)
+			#if not hasattr(func, '_cache_ttl_cache'):
+			#	func._cache_ttl_cache={}
+			if ttl not in _cache_ttl_cache:
+				_cache_ttl_cache[ttl]
