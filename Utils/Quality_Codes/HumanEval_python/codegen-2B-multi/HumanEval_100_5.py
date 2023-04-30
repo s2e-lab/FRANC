@@ -1,0 +1,27 @@
+
+def make_a_pile(n):
+    """
+    Given a positive integer n, you have to make a pile of n levels of stones.
+    The first level has n stones.
+    The number of stones in the next level is:
+        - the next odd number if n is odd.
+        - the next even number if n is even.
+    Return the number of stones in each level in a list, where element at index
+    i represents the number of stones in the level (i+1).
+
+    Examples:
+    >>> make_a_pile(3)
+    [3, 5, 7]
+    """
+    piles = [1]*n
+    piles[0] = 1
+    pile_size = int(1.0/n+0.00001)
+    for i in range(0,n - 1):
+        piles[1+i] = pile_size
+
+    result = [n]
+    for i in range(2, n):
+        result.append(result[-1] + result[i-1])
+    return result
+
+

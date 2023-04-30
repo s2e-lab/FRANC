@@ -1,0 +1,27 @@
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+import java.math.*;
+
+class ID_1519736{
+    /**
+     * Write a function to shuffle randomly a given array.
+     * 
+     * Example:
+     * int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+     * shuffle(arr);
+     * 
+     * output: [4, 2, 3, 1, 5, 6, 7, 8, 9]
+     */
+    public static void shuffle(int[] arr) {
+        for (int i = 0; i < arr.length; i ++) {
+            System.out.print(arr[i] + " ");
+            System.out.flush();
+        }
+    }
+    
+    public static void main(String[] args) {
+        int T0 = 2000; // T0 is the initial seed
+       
+}
+}
