@@ -133,3 +133,4 @@ DatasetCollection/CanonicalSolutionPython/
 Utils/Codes/
 .DS_Store
 Static_Filter/Dummy_output/
+./SuggestionGenerator/config.json

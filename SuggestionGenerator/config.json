@@ -1,5 +1,5 @@
 {
-    "OPEN_AI_KEY":"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",
+    "OPEN_AI_KEY":"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",
     "max_new_length": 512,
     "num_suggestions": 10,
     "model_name": "gpt3.5"

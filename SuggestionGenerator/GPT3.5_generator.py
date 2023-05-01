@@ -72,12 +72,12 @@ def main():
     config = load_config("config.json")
 
     benchmark_root = "../Benchmarks/"
-    benchmark_file = "HumanEval_python.jsonl"
+    benchmark_file = "SecurityEval_prompt.jsonl"
     benchmark_path = benchmark_root + benchmark_file
     # get list of parsed prompts from the JSON file
     prompts = get_prompts(benchmark_path)
     print(len(prompts))
-    suggestions = generate_suggestions( prompts, key="prompt", max_new_length=config["max_new_length"], num_suggestions=config["num_suggestions"])
+    suggestions = generate_suggestions( prompts, key="Prompt", max_new_length=config["max_new_length"], num_suggestions=config["num_suggestions"])
     print(len(suggestions))
 
     suggestion_root = "./Suggestions/"
