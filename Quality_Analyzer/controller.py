@@ -9,7 +9,7 @@ dir_list = os.listdir(benchmark_root)
 
 not_include = []
 for benchmark_file in dir_list:
-    if ".DS_Store" not in benchmark_file and "aiXcoder_prompt" not in benchmark_file and "CoderEval4Java_prompt_codegen-2B-multi" not in benchmark_file and "CoderEval4Java_prompt_codegen-350M-multi" not in benchmark_file:
+    if "SecurityEval" in benchmark_file:
     # if "CoderEval4Java_prompt_gpt3.5_512_10.jsonl" in benchmark_file:
         print("Processing file: ", benchmark_file)
         benchmark_path = os.path.join(benchmark_root, benchmark_file)
