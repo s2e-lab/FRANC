@@ -6,4 +6,5 @@
 #$ -q long           # Specify queue
 #$ -N  openai_python
 
+conda activate Franc
 python GPT3.5_generator.py
