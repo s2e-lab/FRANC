@@ -1,0 +1,12 @@
+from lxml import etree
+
+
+def getXmlRoot():
+    '''
+    Create an XML parser and parse the resources/c.xml file and return the root element
+    '''
+    parser = etree.XmlPullParser(file=XMLFile)
+    doc = parser.getroot()
+    return doc
+
+
