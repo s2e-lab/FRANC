@@ -69,14 +69,14 @@ def main():
 
     config = load_config("config.json")
     # for benchmark_file in ["CoderEval4Python_prompt_gpt3.5_512_10.jsonl","HumanEval_java_gpt3.5_512_10.jsonl","HumanEval_python_gpt3.5_512_10.jsonl","aiXcoder_prompt_gpt3.5_512_10.jsonl","CoderEval4Java_prompt_gpt3.5_512_10.jsonl","CoderEval4Python_prompt_gpt3.5_512_10.jsonl","SOEvalPython_gpt3.5_512_10.jsonl", "SOEvalJava_gpt3.5_512_10.jsonl"]:
-    for benchmark_file in ["CoderEval4Python_prompt_gpt3.5_512_10.jsonl"]:
+    for benchmark_file in ["SecurityEval_python_gpt3.5_512_10.jsonl"]:
         print(benchmark_file)
         benchmark_root = "./Suggestions/"
         benchmark_path = benchmark_root + benchmark_file
         # get list of parsed prompts from the JSON file
         prompts = get_prompts(benchmark_path)
         print(len(prompts))
-        suggestions = fix_generate_suggestions( prompts, key="prompt", max_new_length=config["max_new_length"], num_suggestions=config["num_suggestions"])
+        suggestions = fix_generate_suggestions( prompts, key="Prompt", max_new_length=config["max_new_length"], num_suggestions=config["num_suggestions"])
         print(len(suggestions))
 
         suggestion_path = benchmark_path

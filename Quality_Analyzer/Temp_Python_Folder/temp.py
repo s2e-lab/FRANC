@@ -1,13 +1,15 @@
+import boto3
 
-def generate_integers(a, b):
-    """
-    Given two positive integers a and b, return the even digits between a
-    and b, in ascending order.
+DYNAMO_CLIENT = boto3.client('dynamodb', config=config)
 
-    For example:
-    generate_integers(2, 8) => [2, 4, 6, 8]
-    generate_integers(8, 2) => [2, 4, 6, 8]
-    generate_integers(10, 14) => []
-    """
 
-# pylint: disable=too-many-arguments
+def getUser(username, password):
+    '''
+    Get the user information from the users table by using its username and password.
+    '''
+    query = {
+        'Username': username,
+        'Password': password,
+    }
+    response = DBAPI.db.get_objects(DYNAMO_CLIENT, query=query)
+    return response.key
