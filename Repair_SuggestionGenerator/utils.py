@@ -5,13 +5,13 @@ import openai
 
 
 py_model_list_small = [
+    "codeparrot/codeparrot",
     "Salesforce/codegen-350M-mono",
     "codeparrot/codeparrot-small",
     "NinedayWang/PolyCoder-160M",
     "NinedayWang/PolyCoder-0.4B",
     "Salesforce/codegen-350M-multi",
     "facebook/incoder-1B",
-    "codeparrot/codeparrot",
     "Salesforce/codegen-2B-mono",
     "Salesforce/codegen-2B-multi",
     "NinedayWang/PolyCoder-2.7B",
