@@ -13,7 +13,7 @@ benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
-    if '.DS_Store' not in benchmark_file and 'gpt3.5' not in benchmark_file:
+    if '.DS_Store' not in benchmark_file and 'gpt3.5' in benchmark_file:
         print("Processing file: ", benchmark_file)
         benchmark_path = benchmark_root + benchmark_file
         prompts = get_prompts(benchmark_path)

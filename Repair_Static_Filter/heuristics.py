@@ -12,7 +12,7 @@ from utils import (
     get_all_class_names,
     parse_code,
     get_line_number_repair,
-    remove_code_upto_line
+    remove_code_upto_line,
 )
 
 DEBUG = False
@@ -69,7 +69,7 @@ def heuristic_2(code, data, key, language):
                     code = extra_code + "\n" + code
                     heuristic_applied = True
     else:
-        code = prompt + "\t" + code
+        code = prompt + "\n\t" + code
         heuristic_applied = True
     return code, heuristic_applied
 
@@ -196,23 +196,38 @@ def heuristic_7(code: str, data, key):
 
 
 def replace_code(code, data):
-    print("Fix in prompt: ", get_line_number_repair(data["repair_prompt"], " Fix: "))
-    print("Fix in code: ", get_line_number_repair(code, " Fix: "))
-    code = remove_code_upto_line(code, get_line_number_repair(data["repair_prompt"], " Fix: "))
+    # print("Fix in prompt: ", get_line_number_repair(data["repair_prompt"], " Fix: "))
+    # print("Fix in code: ", get_line_number_repair(code, " Fix: "))
+    code = remove_code_upto_line(
+        code, get_line_number_repair(data["repair_prompt"], " Fix: ")
+    )
     return code
+
 
 def replace_code_gpt3(code, data, language):
-    if "Fix: " not in code:
-        if "prompt" in data.keys():
-            code = data["prompt"]+code
-        else:
-            code = data["Prompt"]+code
-    return code
+    old_code = code
+    if language == "python":
+        methodname = get_method_name(data["repair_prompt"], language)
+        # print("Method name: ", methodname)
+        if methodname not in code:
+            if "prompt" in data.keys():
+                code = data["prompt"] +"\n"+ code
+            else:
+                code = data["Prompt"] +"\n"+ code
+
+    else:
+        classname = get_class_name(data["repair_prompt"], language)
+        if classname not in code:
+            if "prompt" in data.keys():
+                code = data["prompt"] + code
+            else:
+                code = data["Prompt"] + code
+    return code, old_code!=code
+
 
 def fix_code(dataset, model, code, data, language, key="prompt"):
-    if "gpt3.5" in model:
-        code = replace_code_gpt3(code, data, language);
-    code = replace_code(code, data);
+        
+    
 
 
     # track what heuristic(s) were applied, if any
@@ -220,7 +235,9 @@ def fix_code(dataset, model, code, data, language, key="prompt"):
     applied_heuristics = [False for _ in range(0, total_heuristics)]
     if "gpt3.5" in model:
         code, applied_heuristics[0] = heuristic_1(code, language)
-        code, applied_heuristics[1] = heuristic_2(code, data, key, language)
+        code, applied_heuristics[1] = replace_code_gpt3(code, data, language)
+    #     # code, applied_heuristics[1] = heuristic_2(code, data, key, language)
+    # code = replace_code(code, data)
 
     code, applied_heuristics[2] = heuristic_3(code, language)
 
@@ -230,7 +247,6 @@ def fix_code(dataset, model, code, data, language, key="prompt"):
     else:
         code, applied_heuristics[5] = heuristic_6(code, data, key, language)
         code, applied_heuristics[6] = heuristic_7(code, data, key)
-
 
     applied_heuristics = [
         f"H{i + 1}" for i in range(0, total_heuristics) if applied_heuristics[i]
@@ -256,7 +272,6 @@ def apply_heuristics(benchmark_file, prompts, key, max_new_length, num_suggestio
 
     fixed_suggestions = []
     for prompt in tqdm(prompts):
-
         if DEBUG:
             print("Processing prompt: ", prompt["task_id"])
         updated_prompt = prompt.copy()
