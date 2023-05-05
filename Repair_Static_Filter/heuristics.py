@@ -11,9 +11,11 @@ from utils import (
     get_class_name,
     get_all_class_names,
     parse_code,
+    get_line_number_repair,
+    remove_code_upto_line
 )
 
-DEBUG = True
+DEBUG = False
 
 
 def heuristic_1(code: str, language: str):
@@ -194,13 +196,24 @@ def heuristic_7(code: str, data, key):
 
 
 def replace_code(code, data):
-    print(data, code)
+    print("Fix in prompt: ", get_line_number_repair(data["repair_prompt"], " Fix: "))
+    print("Fix in code: ", get_line_number_repair(code, " Fix: "))
+    code = remove_code_upto_line(code, get_line_number_repair(data["repair_prompt"], " Fix: "))
+    return code
+
+def replace_code_gpt3(code, data, language):
+    if "Fix: " not in code:
+        if "prompt" in data.keys():
+            code = data["prompt"]+code
+        else:
+            code = data["Prompt"]+code
     return code
 
 def fix_code(dataset, model, code, data, language, key="prompt"):
+    if "gpt3.5" in model:
+        code = replace_code_gpt3(code, data, language);
+    code = replace_code(code, data);
 
-    replace_old_code = replace_code(code, data);
-    return replace_old_code, True
 
     # track what heuristic(s) were applied, if any
     total_heuristics = 7

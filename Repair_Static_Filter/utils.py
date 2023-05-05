@@ -37,6 +37,21 @@ def get_line_number(code: str, target_line: str) -> int:
             return i
     return -1
 
+def get_line_number_repair(code: str, target_line: str) -> int:
+    lines = code.splitlines()
+    line_no = -1
+    for i in range(len(lines)):
+        if target_line in lines[i]:
+            line_no = i
+    return line_no
+
+def remove_code_upto_line(code: str, target_line: int) -> int:
+    lines = code.splitlines()
+    for i in range(len(lines)):
+        if target_line == i:
+            return "\n".join(lines[i+1:])
+    return code
+
 def get_code_up_to_line(code: str, line_number: int) -> str:
     lines = code.splitlines()
     return "\n".join(lines[:line_number])

@@ -13,7 +13,7 @@ benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
-    if 'SOEvalJava_codegen-2B-multi_128_10' in benchmark_file:
+    if '.DS_Store' not in benchmark_file and 'gpt3.5' not in benchmark_file:
         print("Processing file: ", benchmark_file)
         benchmark_path = benchmark_root + benchmark_file
         prompts = get_prompts(benchmark_path)
@@ -26,14 +26,16 @@ for benchmark_file in dir_list:
         suggestion_root = "./Repair_Static_Filtered_Suggestions/"
         suggestion_path = suggestion_root + benchmark_file
 
+        key = "prompt"
+        if "Security" in benchmark_file:
+            key = "Prompt"
             
         suggestions = apply_heuristics(
                 benchmark_file,
                 prompts,
-                key="repair_prompt",
+                key= key,
                 max_new_length=max_new_length,
                 num_suggestions=num_suggestions,
             )
         write_suggestions(suggestions, suggestion_path)
-        break
 
