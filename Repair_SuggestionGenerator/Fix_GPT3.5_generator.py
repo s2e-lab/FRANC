@@ -68,7 +68,7 @@ def fix_generate_suggestions( prompts, key="prompt", max_new_length=128, num_sug
 def main():
 
     config = load_config("config.json")
-    for benchmark_file in ["aiXcoder_prompt_gpt3.5_512_10.jsonl","CoderEval4Java_prompt_gpt3.5_512_10.jsonl","SecurityEval_python_gpt3.5_512_10.jsonl"]:
+    for benchmark_file in ["CoderEval4Python_prompt_gpt3.5_512_10.jsonl","CoderEval4Java_prompt_gpt3.5_512_10.jsonl","SOEvalPython_gpt3.5_512_10.jsonl","HumanEval_python_gpt3.5_512_10.jsonl","HumanEval_java_gpt3.5_512_10.jsonl","SecurityEval_python_gpt3.5_512_10.jsonl"]:
         print(benchmark_file)
         benchmark_root = "./Repair_Suggestions/"
         benchmark_path = benchmark_root + benchmark_file

@@ -1,23 +1,13 @@
 import os
 
-from utils import get_prompts, write_suggestions, get_model
+from utils import get_prompts, write_suggestions, get_model, load_config
 import openai
 from tqdm.auto import tqdm
 import time
 
 import json
 
-def load_config(config_file: str) -> dict:
-    """
-    Loads the JSON configuration and sets the OpenAI API key.
-    @param config_file:  Path to the JSON configuration file.
-    @returns config: dictionary of the parsed configuration
-    """
-    with open(config_file) as json_file:
-        config = json.load(json_file)
-    # sets the OpenAI key
-    openai.api_key = config["OPEN_AI_KEY"]
-    return config
+
 
 
 # Code Generation Configuration Parameters
