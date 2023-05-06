@@ -4,7 +4,7 @@ from utils import get_prompts, write_suggestions
 
 from analyzer import analyzer
 
-benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions/"
+benchmark_root = "../Repair_Static_Filter/Repair_Static_Filtered_Suggestions/"
 dir_list = os.listdir(benchmark_root)
 
 not_include = []
@@ -21,9 +21,10 @@ for benchmark_file in dir_list:
         dataset_type = "Java"
         if "python" in benchmark_file.lower():
             dataset_type = "Python"
+            continue
         else:
             dataset_type = "Java"
-            continue
+            
         print("Dataset type: ", dataset_type)
 
         suggestion_root = "./Repair_Quality_Filtered_Suggestions/"
@@ -32,7 +33,7 @@ for benchmark_file in dir_list:
         suggestions = analyzer(
                 benchmark_file,
                 prompts,
-                key="repair_prompt",
+                key="prompt",
                 max_new_length=max_new_length,
                 num_suggestions=num_suggestions,
             )

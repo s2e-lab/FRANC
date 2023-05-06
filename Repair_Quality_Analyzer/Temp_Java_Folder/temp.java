@@ -3,22 +3,23 @@ import java.lang.*;
 import java.util.*;
 import java.math.*;
 
-class ID_41107{
+class ID_1519736{
     /**
-     * Write a program to create a random alphanumeric string of a given length.
+     * Write a function to shuffle randomly a given array.
      * 
      * Example:
-     * randomString(10);
+     * int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+     * shuffle(arr);
      * 
-     * output: 2aBb3cDd4e
+     * output: [4, 2, 3, 1, 5, 6, 7, 8, 9]
      */
-    public static String randomString(int length) {
-        String result = "";
-        int r = random.nextInt(length - 1);
-        for (int i = 0; i < r; i++) {
-            result += "1";
-        }
-        return result.substring(0, r);
-    }
+    public static void shuffle(int[] arr) {
+    	Random rand = new Random();
+    	int[] a = new int[arr.length];
+    	for(int i=0; i<arr.length; i++) {
+    		a[i]=arr[i%(int)rand.nextInt(arr.length)];
+    	}
+
+} 
 
 }

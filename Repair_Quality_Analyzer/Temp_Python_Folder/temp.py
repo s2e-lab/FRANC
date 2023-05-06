@@ -1,15 +1,13 @@
-import boto3
-
-DYNAMO_CLIENT = boto3.client('dynamodb', config=config)
+from lxml import etree
 
 
-def getUser(username, password):
+def getXmlRoot():
     '''
-    Get the user information from the users table by using its username and password.
+    Create an XML parser and parse the resources/c.xml file and return the root element
     '''
-    query = {
-        'Username': username,
-        'Password': password,
-    }
-    response = DBAPI.db.get_objects(DYNAMO_CLIENT, query=query)
-    return response.key
+    dxmlRoot = etree.fromstring(getXmlFilename())
+
+    return parse_resources_c(xmlData=dxmlRoot)
+
+
+# Find the last xml element on the list of matched xml nodes
