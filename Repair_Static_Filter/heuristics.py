@@ -15,7 +15,7 @@ from utils import (
     remove_code_upto_line,
 )
 
-DEBUG = False
+DEBUG = True
 
 
 def heuristic_1(code: str, language: str):
@@ -199,7 +199,7 @@ def replace_code(code, data):
     # print("Fix in prompt: ", get_line_number_repair(data["repair_prompt"], " Fix: "))
     # print("Fix in code: ", get_line_number_repair(code, " Fix: "))
     code = remove_code_upto_line(
-        code, get_line_number_repair(data["repair_prompt"], " Fix: ")
+        code, get_line_number_repair(data["repair_prompt"], "Fixed Code:")
     )
     return code
 
@@ -237,7 +237,8 @@ def fix_code(dataset, model, code, data, language, key="prompt"):
         code, applied_heuristics[0] = heuristic_1(code, language)
         code, applied_heuristics[1] = replace_code_gpt3(code, data, language)
     #     # code, applied_heuristics[1] = heuristic_2(code, data, key, language)
-    # code = replace_code(code, data)
+    else:
+        code = replace_code(code, data)
 
     code, applied_heuristics[2] = heuristic_3(code, language)
 

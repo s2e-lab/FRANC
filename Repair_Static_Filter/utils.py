@@ -105,5 +105,5 @@ def get_all_class_names(code: str, language) -> str:
 def parse_code(code) -> bool:
     try:
         return javalang.parse.parse(code)  # code is compilable
-    except (JavaSyntaxError, LexerError, TypeError, RecursionError) as e:
+    except (JavaSyntaxError, LexerError, TypeError, RecursionError, StopIteration) as e:
         return None

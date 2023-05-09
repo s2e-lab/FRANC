@@ -22,7 +22,6 @@ for benchmark_file in dir_list:
         max_new_length = 128
         num_suggestions = 10
 
-        dataset_type = "Python"
         suggestion_root = "./Static_Filtered_Suggestions/"
         suggestion_path = suggestion_root + benchmark_file
 

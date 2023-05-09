@@ -9,7 +9,7 @@ from heuristics import (
     apply_heuristics
 )
 
-benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions/"
+benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions_1/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
@@ -23,7 +23,7 @@ for benchmark_file in dir_list:
         num_suggestions = 10
 
         dataset_type = "Python"
-        suggestion_root = "./Repair_Static_Filtered_Suggestions/"
+        suggestion_root = "./Repair_Static_Filtered_Suggestions_1/"
         suggestion_path = suggestion_root + benchmark_file
 
         key = "prompt"
