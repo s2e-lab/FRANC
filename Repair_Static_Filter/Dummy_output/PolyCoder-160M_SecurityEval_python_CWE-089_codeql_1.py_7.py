@@ -1,2 +1,0 @@
-
-user = get_connection()
