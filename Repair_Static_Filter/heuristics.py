@@ -224,6 +224,18 @@ def replace_code_gpt3(code, data, language):
                 code = data["Prompt"] + code
     return code, old_code!=code
 
+def empty_or_only_comment(code, language):
+    if language == "python":
+        non_comment_code = re.sub(r'(\'\'\'|\")(.*?)(\'\'\'|\")', '', code, flags=re.DOTALL)
+        non_comment_code = re.sub(r'#.*', '', non_comment_code)
+        if non_comment_code.strip():
+            return False
+    else:
+        non_comment_code = re.sub(r'(/\*\*|\*/|\*|//)(.*?)(/\*\*|\*/|\*|//)', '', code, flags=re.DOTALL)
+        non_comment_code = re.sub(r'//.*', '', non_comment_code)
+        if non_comment_code.strip():
+            return False
+    return True
 
 def fix_code(dataset, model, code, data, language, key="prompt"):
         
@@ -231,7 +243,7 @@ def fix_code(dataset, model, code, data, language, key="prompt"):
 
 
     # track what heuristic(s) were applied, if any
-    total_heuristics = 7
+    total_heuristics = 8
     applied_heuristics = [False for _ in range(0, total_heuristics)]
     if "gpt3.5" in model:
         code, applied_heuristics[0] = heuristic_1(code, language)
@@ -249,9 +261,15 @@ def fix_code(dataset, model, code, data, language, key="prompt"):
         code, applied_heuristics[5] = heuristic_6(code, data, key, language)
         code, applied_heuristics[6] = heuristic_7(code, data, key)
 
+    if empty_or_only_comment(code, language):
+        code = (data["prompt"] if "prompt" in data.keys() else data["Prompt"])+code
+        applied_heuristics[7] = True
+
     applied_heuristics = [
         f"H{i + 1}" for i in range(0, total_heuristics) if applied_heuristics[i]
     ]
+
+    
 
     return code, applied_heuristics
 

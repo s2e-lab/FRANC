@@ -1,30 +1,30 @@
 {
   "errors": [],
-  "generated_at": "2023-05-05T23:27:03Z",
+  "generated_at": "2023-05-09T15:06:22Z",
   "metrics": {
     "_totals": {
-      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.HIGH": 1,
       "CONFIDENCE.LOW": 0,
       "CONFIDENCE.MEDIUM": 0,
       "CONFIDENCE.UNDEFINED": 0,
       "SEVERITY.HIGH": 0,
       "SEVERITY.LOW": 1,
-      "SEVERITY.MEDIUM": 1,
+      "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 7,
+      "loc": 5,
       "nosec": 0,
       "skipped_tests": 0
     },
     "temp.py": {
-      "CONFIDENCE.HIGH": 2,
+      "CONFIDENCE.HIGH": 1,
       "CONFIDENCE.LOW": 0,
       "CONFIDENCE.MEDIUM": 0,
       "CONFIDENCE.UNDEFINED": 0,
       "SEVERITY.HIGH": 0,
       "SEVERITY.LOW": 1,
-      "SEVERITY.MEDIUM": 1,
+      "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 7,
+      "loc": 5,
       "nosec": 0,
       "skipped_tests": 0
     }
@@ -49,25 +49,6 @@
       ],
       "more_info": "https://bandit.readthedocs.io/en/1.7.4/blacklists/blacklist_imports.html#b410-import-lxml",
       "test_id": "B410",
-      "test_name": "blacklist"
-    },
-    {
-      "code": "7     '''\n8     dxmlRoot = etree.fromstring(getXmlFilename())\n9 \n",
-      "col_offset": 15,
-      "filename": "temp.py",
-      "issue_confidence": "HIGH",
-      "issue_cwe": {
-        "id": 20,
-        "link": "https://cwe.mitre.org/data/definitions/20.html"
-      },
-      "issue_severity": "MEDIUM",
-      "issue_text": "Using lxml.etree.fromstring to parse untrusted XML data is known to be vulnerable to XML attacks. Replace lxml.etree.fromstring with its defusedxml equivalent function.",
-      "line_number": 8,
-      "line_range": [
-        8
-      ],
-      "more_info": "https://bandit.readthedocs.io/en/1.7.4/blacklists/blacklist_calls.html#b313-b320-xml-bad-etree",
-      "test_id": "B320",
       "test_name": "blacklist"
     }
   ]

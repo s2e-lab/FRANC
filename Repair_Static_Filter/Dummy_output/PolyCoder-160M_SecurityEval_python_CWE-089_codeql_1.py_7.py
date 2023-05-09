@@ -1,0 +1,2 @@
+
+user = get_connection()
