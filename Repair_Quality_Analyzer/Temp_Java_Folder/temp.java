@@ -3,23 +3,34 @@ import java.lang.*;
 import java.util.*;
 import java.math.*;
 
-class ID_1519736{
-    /**
-     * Write a function to shuffle randomly a given array.
-     * 
-     * Example:
-     * int[] arr = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-     * shuffle(arr);
-     * 
-     * output: [4, 2, 3, 1, 5, 6, 7, 8, 9]
-     */
-    public static void shuffle(int[] arr) {
-    	Random rand = new Random();
-    	int[] a = new int[arr.length];
-    	for(int i=0; i<arr.length; i++) {
-    		a[i]=arr[i%(int)rand.nextInt(arr.length)];
-    	}
 
-} 
+class UriComponent{
+	/** 
+	 * Encodes a string with template parameters names present, specifically the characters '{' and '}' will be percent-encoded.
+	 * @param s the string with zero or more template parameters names
+	 * @return the string with encoded template parameters names.
+	 */
+	
+	public static String encodeTemplateNames(String s){
+		String res = "";
+		String rez = "";
+		for(int i=0;i<s.length();i++){
+			Integer index = Integer.parseInt(s.substring(i,i+1));
+			rez = String.format("%%%st%d",rez.toLowerCase(),index);
+			
+		}
+// Fix: Dead store to local variable
 
+// Fixed Code: 
+//		System.out.println(""+rez);
+		return rez;
+	}	
+}
+
+public class Tester 
+{
+
+private static void printText(String src) {
+
+}
 }

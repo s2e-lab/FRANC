@@ -1,0 +1,4 @@
+temp.java:30: error: class Tester is public, should be declared in a file named Tester.java
+public class Tester 
+       ^
+1 error

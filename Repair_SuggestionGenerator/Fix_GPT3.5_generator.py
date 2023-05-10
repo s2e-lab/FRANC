@@ -70,7 +70,7 @@ def main():
     config = load_config("config.json")
     for benchmark_file in ["aiXcoder_prompt_gpt3.5_512_10.jsonl","CoderEval4Python_prompt_gpt3.5_512_10.jsonl","CoderEval4Java_prompt_gpt3.5_512_10.jsonl","SOEvalPython_gpt3.5_512_10.jsonl","SOEvalJava_gpt3.5_512_10.jsonl","HumanEval_python_gpt3.5_512_10.jsonl","HumanEval_java_gpt3.5_512_10.jsonl","SecurityEval_python_gpt3.5_512_10.jsonl"]:
         print(benchmark_file)
-        benchmark_root = "./Repair_Suggestions_1/"
+        benchmark_root = "./Repair_Suggestions_2/"
         benchmark_path = benchmark_root + benchmark_file
         # get list of parsed prompts from the JSON file
         prompts = get_prompts(benchmark_path)

@@ -1,6 +1,6 @@
 {
   "errors": [],
-  "generated_at": "2023-05-09T15:06:22Z",
+  "generated_at": "2023-05-09T22:25:34Z",
   "metrics": {
     "_totals": {
       "CONFIDENCE.HIGH": 1,
@@ -11,7 +11,7 @@
       "SEVERITY.LOW": 1,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 5,
+      "loc": 6,
       "nosec": 0,
       "skipped_tests": 0
     },
@@ -24,14 +24,14 @@
       "SEVERITY.LOW": 1,
       "SEVERITY.MEDIUM": 0,
       "SEVERITY.UNDEFINED": 0,
-      "loc": 5,
+      "loc": 6,
       "nosec": 0,
       "skipped_tests": 0
     }
   },
   "results": [
     {
-      "code": "1 from lxml import etree\n2 \n3 \n4 def getXmlRoot():\n5     '''\n",
+      "code": "1 from lxml import etree\n2 \n3 \n4 def transform_xml():\n5     '''\n",
       "col_offset": 0,
       "filename": "temp.py",
       "issue_confidence": "HIGH",

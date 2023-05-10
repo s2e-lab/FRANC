@@ -15,7 +15,7 @@ from utils import (
     remove_code_upto_line,
 )
 
-DEBUG = True
+DEBUG = False
 
 
 def heuristic_1(code: str, language: str):
@@ -250,7 +250,8 @@ def fix_code(dataset, model, code, data, language, key="prompt"):
         code, applied_heuristics[1] = replace_code_gpt3(code, data, language)
     #     # code, applied_heuristics[1] = heuristic_2(code, data, key, language)
     else:
-        code = replace_code(code, data)
+        pass
+        # code = replace_code(code, data)
 
     code, applied_heuristics[2] = heuristic_3(code, language)
 

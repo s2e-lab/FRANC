@@ -9,11 +9,11 @@ from heuristics import (
     apply_heuristics
 )
 
-benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions_1/"
+benchmark_root = "../Repair_SuggestionGenerator/Repair_Suggestions_2/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
-    if '.DS_Store' not in benchmark_file and 'gpt3.5' not in benchmark_file:
+    if '.DS_Store' not in benchmark_file and 'gpt3.5' in benchmark_file:
         print("Processing file: ", benchmark_file)
         benchmark_path = benchmark_root + benchmark_file
         prompts = get_prompts(benchmark_path)
@@ -23,7 +23,7 @@ for benchmark_file in dir_list:
         num_suggestions = 10
 
         dataset_type = "Python"
-        suggestion_root = "./Repair_Static_Filtered_Suggestions_1/"
+        suggestion_root = "./Repair_Static_Filtered_Suggestions_2/"
         suggestion_path = suggestion_root + benchmark_file
 
         key = "prompt"
