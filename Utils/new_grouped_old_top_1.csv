@@ -1,0 +1,17 @@
+Model,Language,Benchmark,Dataset,Prompt_ID,Old_Top_1_Score,New_Top_1_Score
+PolyCoder-0.4B,Java,4,4,4,4,4
+PolyCoder-0.4B,Python,2,2,2,2,2
+PolyCoder-160M,Java,2,2,2,2,2
+PolyCoder-160M,Python,1,1,1,1,1
+PolyCoder-2.7B,Java,1,1,1,1,1
+PolyCoder-2.7B,Python,3,3,3,3,3
+codegen-2B-mono,Python,8,8,8,8,8
+codegen-2B-multi,Java,24,24,24,24,24
+codegen-2B-multi,Python,6,6,6,6,6
+codegen-350M-mono,Python,5,5,5,5,5
+codegen-350M-multi,Java,7,7,7,7,7
+codegen-350M-multi,Python,3,3,3,3,3
+codeparrot,Python,2,2,2,2,2
+codeparrot-small,Python,1,1,1,1,1
+gpt3.5,Java,30,30,30,30,30
+gpt3.5,Python,6,6,6,6,6
