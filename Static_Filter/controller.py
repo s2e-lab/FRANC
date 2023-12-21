@@ -9,7 +9,7 @@ from heuristics import (
     apply_heuristics
 )
 
-benchmark_root = "../SuggestionGenerator/Suggestions_Backup/"
+benchmark_root = "../SuggestionGenerator/Suggestions/"
 dir_list = os.listdir(benchmark_root)
 
 for benchmark_file in dir_list:
