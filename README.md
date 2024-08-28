@@ -1,28 +1,8 @@
 # FRANC
-This folder contains the source code of the paper titled "franc: A Framework for Improving the Quality ofAutomatically Generated Code."
+This project contains the source code of the paper titled "FRANC: A Framework for Improving the Quality ofAutomatically Generated Code", accepted at the 24th IEEE International Conference on Source Code Analysis and Manipulation (SCAM 2024).
 
 ## Abstract
-In recent years, the use of automated source code
-generation utilizing transformer-based generative models has
-expanded, and these models can generate functional code ac-
-cording to the requirements of the developers. However, recent
-research revealed that these automatically generated source codes
-contain quality flaws and vulnerabilities. Despite researchers
-and practitioners attempting to enhance code generation quality,
-retraining large language models is time-consuming and resource-
-intensive. As a result, our work presents FRANC, a framework for
-recommending more secure and high-quality source code derived
-from transformer-based code generation models. FRANC includes
-a static filter to make generated code compilable with heuristics
-and a quality filter to rank the suggestions based on quality (i.e.,
-code and security smells). In addition, FRANC contains techniques for refactoring vulnerable source code. The framework has been instantiated with five Python and Java code generation
-models and six prompt datasets, including a newly proposed one
-in this work, SOEVAL. The static filter improves from 9% to 46%
-Java suggestions and 10% to 43% Python suggestions regarding
-compilability. The average improvement over the NDCG score for
-the ranking system is 0.0763, and the repairing techniques repair
-the highest 80% of prompts. The framework, FRANC takes, on
-average, 1.9845 seconds for Java; for Python, it takes 0.0846.
+In recent years, the use of automated source code generation utilizing transformer-based generative models has grown in popularity. These models can generate code according to the developers’ requirements. However, recent research showed that these automatically generated source codes can contain vulnerabilities and other quality issues. Despite researchers’ and practitioners’ attempts to enhance code generation models, retraining and fine-tuning large language models is not only time-consuming but also resource-intensive and costly. Thus, in this paper, we describe FRANC, a lightweight framework for recommending more secure and high-quality source code derived from transformer-based code generation models. FRANC includes a static filter to make the generated code compilable with heuristics and a quality-aware ranker to sort the code snippets based on a quality score. Moreover, the framework uses prompt engineering to fix persistent quality issues. We evaluated FRANC with five Python and Java code generation models and six prompt datasets, including a newly created one in this work (FRANC). The static filter improves 9% to 46% Java suggestions and 10% to 43% Python suggestions regarding compilability. The average improvement over the NDCG@10 score for the ranking system is 0.0763, and the repairing techniques repair the highest 80% of prompts. FRANC takes, on average, 1.98 seconds for Java; for Python, it takes 0.08 seconds.
 
 ## File Structure
 
