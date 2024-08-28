@@ -34,6 +34,5 @@ average, 1.9845 seconds for Java; for Python, it takes 0.0846.
 6. **Quality_Analyzer_Before_Static_Filter**: Contains the code for the quality analyzer before running the static filter.
 7. **Repair_***: Contains the code for the repair techniques for the smelly codes. Three Benchmarks folders contain three repair scenarios.
 8. **Utils**: Contains the code for the result analysis, repair prompt creation, and samples for NDCG score calculation.
-9. **Franc Experiment.xlsx**: Contains the results of the experiments.
-10. **FRANC_Appendix.pdf**: Contains the appendix of the paper.
+9.  **FRANC_Appendix.pdf**: Contains the appendix of the paper.
  
